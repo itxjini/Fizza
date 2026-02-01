@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 16th Birthday, Fizza ✨</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0b0f1a;
+            --accent-purple: #6d6aff;
+            --soft-pink: #ff9aa2;
+            --gold: #f5c77a;
+            --text-white: #eaeaf0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-white);
+            overflow: hidden; /* CRITICAL: No scrolling */
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Animated Star Background */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 2s ease-out forwards;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Gradient Background Overlay */
+        .gradient-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background: radial-gradient(ellipse at top, rgba(109, 106, 255, 0.15), transparent 60%),
+                        radial-gradient(ellipse at bottom, rgba(255, 154, 162, 0.1), transparent 60%);
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        /* Main Content Container */
+        .main-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            width: 90%;
+            max-width: 900px;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 60px 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                        0 0 60px rgba(109, 106, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(109, 106, 255, 0.1), transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Typography */
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6.5vw, 5rem);
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-white);
+            text-shadow: 0 0 40px rgba(109, 106, 255, 0.6),
+                         0 0 20px rgba(255, 154, 162, 0.4),
+                         0 2px 10px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            position: relative;
+            z-index: 1;
+            white-space: pre-wrap; /* Preserve spaces */
+            line-height: 1.2;
+        }
+
+        .main-title span {
+            display: inline-block;
+            opacity: 0;
+            animation: letterAppear 0.5s ease-out forwards;
+            white-space: pre; /* Preserve spaces in spans */
+        }
+
+        @keyframes letterAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Photo Gallery */
+        .photo-gallery {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 3%;
+            z-index: 15;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.5s forwards;
+            pointer-events: none;
+        }
+
+        .photo-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .photo-frame {
+            width: 160px;
+            height: 160px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3),
+                        0 0 30px rgba(109, 106, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            pointer-events: auto;
+        }
+
+        .photo-frame:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4),
+                        0 0 50px rgba(255, 154, 162, 0.4);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--gold);
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2s forwards;
+            letter-spacing: 3px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .emotional-text {
+            font-size: clamp(0.85rem, 2vw, 1.1rem);
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 3.5s forwards;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .prayer-section {
+            background: rgba(109, 106, 255, 0.1);
+            border: 1px solid rgba(109, 106, 255, 0.3);
+            border-radius: 20px;
+            padding: 25px 20px;
+            margin-top: 30px;
+            opacity: 0;
+            animation: glowPulse 2s ease-in-out 5s forwards;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes glowPulse {
+            0% {
+                opacity: 0;
+                box-shadow: 0 0 0 rgba(109, 106, 255, 0);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(109, 106, 255, 0.6);
+            }
+            100% {
+                opacity: 1;
+                box-shadow: 0 0 20px rgba(109, 106, 255, 0.4);
+            }
+        }
+
+        .prayer-text {
+            font-size: clamp(0.8rem, 2vw, 1.05rem);
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        /* Cake Animation */
+        .cake-container {
+            position: fixed;
+            bottom: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20; /* Increased from 5 to appear in front of card */
+            animation: cakeRise 2s ease-out 6.5s forwards;
+        }
+
+        @keyframes cakeRise {
+            to {
+                bottom: 40px;
+            }
+        }
+
+        .cake {
+            position: relative;
+            width: 180px;
+            height: 200px;
+        }
+
+        .cake-layer {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 10px;
+            opacity: 0;
+        }
+
+        .layer-1 {
+            bottom: 0;
+            width: 140px;
+            height: 60px;
+            background: linear-gradient(180deg, #5c4033, #3d2817);
+            animation: layerAppear 0.5s ease-out 7s forwards;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .layer-2 {
+            bottom: 55px;
+            width: 120px;
+            height: 50px;
+            background: linear-gradient(180deg, #6f4e37, #5c4033);
+            animation: layerAppear 0.5s ease-out 7.3s forwards;
+        }
+
+        .layer-3 {
+            bottom: 100px;
+            width: 100px;
+            height: 40px;
+            background: linear-gradient(180deg, #8b6f47, #6f4e37);
+            animation: layerAppear 0.5s ease-out 7.6s forwards;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        @keyframes layerAppear {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* Frosting */
+        .frosting {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px;
+            height: 15px;
+            background: linear-gradient(180deg, #4a3428, #3d2817);
+            border-radius: 50%;
+            opacity: 0;
+            animation: layerAppear 0.5s ease-out 7.9s forwards;
+            box-shadow: 0 2px 10px rgba(74, 52, 40, 0.5);
+        }
+
+        /* Candles */
+        .candles {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+        }
+
+        .candle {
+            width: 8px;
+            height: 35px;
+            background: linear-gradient(180deg, #ff9aa2, #ff6b7a);
+            border-radius: 2px;
+            position: relative;
+            opacity: 0;
+            animation: candleAppear 0.5s ease-out 8.2s forwards;
+        }
+
+        .candle:nth-child(2) {
+            animation-delay: 8.3s;
+        }
+
+        .candle:nth-child(3) {
+            animation-delay: 8.4s;
+        }
+
+        @keyframes candleAppear {
+            to { opacity: 1; }
+        }
+
+        .flame {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 15px;
+            background: radial-gradient(ellipse, #ffd700, #ff6b00);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            opacity: 0;
+            animation: flameAppear 0.5s ease-out 8.5s forwards, flicker 1.5s ease-in-out infinite 8.5s;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+
+        @keyframes flameAppear {
+            to { opacity: 1; }
+        }
+
+        @keyframes flicker {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            25% { transform: translateX(-50%) scale(1.1, 0.9); }
+            50% { transform: translateX(-50%) scale(0.9, 1.1); }
+            75% { transform: translateX(-50%) scale(1.05, 0.95); }
+        }
+
+        /* Music Toggle Button */
+        .music-toggle {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
+        }
+
+        .music-toggle:hover {
+            background: rgba(109, 106, 255, 0.3);
+            box-shadow: 0 0 30px rgba(109, 106, 255, 0.6);
+            transform: scale(1.1);
+        }
+
+        .music-icon {
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .music-toggle.playing .music-icon {
+            animation: musicPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes musicPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Sparkles */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 50;
+            animation: sparkleFloat 3s ease-out forwards;
+        }
+
+        @keyframes sparkleFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(-20px) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.5);
+            }
+        }
+
+        /* Final Glow Effect */
+        .final-glow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(109, 106, 255, 0.3), transparent);
+            z-index: 3;
+            opacity: 0;
+            animation: finalGlow 2s ease-out 9s forwards;
+            pointer-events: none;
+        }
+
+        @keyframes finalGlow {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.5);
+            }
+            100% {
+                opacity: 0.3;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .glass-card {
+                padding: 30px 20px;
+                max-width: 95%;
+            }
+            
+            /* Hide side photos on mobile */
+            .photo-gallery {
+                display: none;
+            }
+            
+            .main-title {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 20px;
+            }
+            
+            .emotional-text {
+                font-size: 0.85rem;
+                margin-bottom: 20px;
+                line-height: 1.5;
+            }
+            
+            .prayer-section {
+                padding: 20px 15px;
+                margin-top: 20px;
+            }
+            
+            .prayer-text {
+                font-size: 0.8rem;
+                line-height: 1.5;
+            }
+            
+            .cake-container {
+                bottom: -150px;
+            }
+            
+            @keyframes cakeRise {
+                to {
+                    bottom: 10px;
+                }
+            }
+            
+            .cake {
+                transform: scale(0.6);
+            }
+            
+            .music-toggle {
+                width: 50px;
+                height: 50px;
+                top: 15px;
+                right: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glass-card {
+                padding: 25px 15px;
+            }
+            
+            .main-title {
+                font-size: 1.6rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .cake {
+                transform: scale(0.5);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Stars Background -->
+    <div class="stars-container" id="stars"></div>
+
+    <!-- Gradient Overlay -->
+    <div class="gradient-overlay"></div>
+
+    <!-- Final Glow -->
+    <div class="final-glow"></div>
+
+    <!-- Photo Gallery (Outside Card) -->
+    <div class="photo-gallery">
+        <!-- Left Column -->
+        <div class="photo-column">
+            <div class="photo-frame">
+                <img src="Fizza1.jpeg" alt="Fizza" onerror="this.parentElement.style.display='none'">
+            </div>
+            <div class="photo-frame">
+                <img src="Fizza2.jpeg" alt="Fizza" onerror="this.parentElement.style.display='none'">
+            </div>
+        </div>
+        
+        <!-- Right Column -->
+        <div class="photo-column">
+            <div class="photo-frame">
+                <img src="Fizza3.jpeg" alt="Fizza" onerror="this.parentElement.style.display='none'">
+            </div>
+            <div class="photo-frame">
+                <img src="Fizza4.jpeg" alt="Fizza" onerror="this.parentElement.style.display='none'">
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="glass-card">
+            <h1 class="main-title" id="mainTitle"></h1>
+            
+            <p class="subtitle">Sweet Sixteen</p>
+            <p class="emotional-text">
+                Today isn't just a birthday — it's the beginning of a beautiful chapter. Your kindness, your light, and your smile make the world softer. Never stop dreaming… the future is already proud of you and I Love you 3000.
+            </p>
+            <div class="prayer-section">
+                <p class="prayer-text">
+                    May Allah bless you with peace, strength, and endless happiness. May your path be protected and your heart always stay pure. Ameen 🤍
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cake -->
+    <div class="cake-container">
+        <div class="cake">
+            <div class="cake-layer layer-1"></div>
+            <div class="cake-layer layer-2"></div>
+            <div class="cake-layer layer-3">
+                <div class="frosting"></div>
+            </div>
+            <div class="candles">
+                <div class="candle">
+                    <div class="flame"></div>
+                </div>
+                <div class="candle">
+                    <div class="flame"></div>
+                </div>
+                <div class="candle">
+                    <div class="flame"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Music Toggle -->
+    <div class="music-toggle" id="musicToggle" title="Click to start music">
+        <span class="music-icon">🎵</span>
+    </div>
+
+    <script>
+        // === ANIMATED STARS ===
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // === LETTER-BY-LETTER TITLE ANIMATION ===
+        function animateTitle() {
+            const line1 = "Happy 16th Birthday";
+            const line2 = "Fizza Irfan ✨";
+            const titleElement = document.getElementById('mainTitle');
+            titleElement.style.opacity = 1;
+            
+            // First line
+            line1.split('').forEach((char, index) => {
+                const span = document.createElement('span');
+                span.textContent = char;
+                span.style.animationDelay = (index * 0.05) + 's';
+                titleElement.appendChild(span);
+            });
+            
+            // Line break
+            const br = document.createElement('br');
+            titleElement.appendChild(br);
+            
+            // Second line
+            line2.split('').forEach((char, index) => {
+                const span = document.createElement('span');
+                span.textContent = char;
+                span.style.animationDelay = ((line1.length + index) * 0.05) + 's';
+                titleElement.appendChild(span);
+            });
+        }
+
+        // === SPARKLE EFFECT ===
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.textContent = '✨';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => sparkle.remove(), 3000);
+        }
+
+        // Random sparkles
+        function randomSparkles() {
+            setInterval(() => {
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                createSparkle(x, y);
+            }, 2000);
+        }
+
+        // === LO-FI MUSIC (WEB AUDIO API) ===
+        let audioContext;
+        let isPlaying = false;
+        let currentNoteTimeout;
+        let musicLoop;
+
+        // Happy Birthday melody (simplified, lo-fi version)
+        const melody = [
+            { note: 'G4', duration: 0.4 },
+            { note: 'G4', duration: 0.2 },
+            { note: 'A4', duration: 0.6 },
+            { note: 'G4', duration: 0.6 },
+            { note: 'C5', duration: 0.6 },
+            { note: 'B4', duration: 1.2 },
+            
+            { note: 'G4', duration: 0.4 },
+            { note: 'G4', duration: 0.2 },
+            { note: 'A4', duration: 0.6 },
+            { note: 'G4', duration: 0.6 },
+            { note: 'D5', duration: 0.6 },
+            { note: 'C5', duration: 1.2 },
+            
+            { note: 'G4', duration: 0.4 },
+            { note: 'G4', duration: 0.2 },
+            { note: 'G5', duration: 0.6 },
+            { note: 'E5', duration: 0.6 },
+            { note: 'C5', duration: 0.6 },
+            { note: 'B4', duration: 0.6 },
+            { note: 'A4', duration: 0.6 },
+            
+            { note: 'F5', duration: 0.4 },
+            { note: 'F5', duration: 0.2 },
+            { note: 'E5', duration: 0.6 },
+            { note: 'C5', duration: 0.6 },
+            { note: 'D5', duration: 0.6 },
+            { note: 'C5', duration: 1.2 },
+        ];
+
+        // Note frequencies
+        const noteFrequencies = {
+            'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23, 
+            'G4': 392.00, 'A4': 440.00, 'B4': 493.88,
+            'C5': 523.25, 'D5': 587.33, 'E5': 659.25, 'F5': 698.46,
+            'G5': 783.99, 'A5': 880.00, 'B5': 987.77
+        };
+
+        function playNote(frequency, duration) {
+            if (!audioContext) return;
+
+            const now = audioContext.currentTime;
+            
+            // Main oscillator (sine wave for softness)
+            const oscillator = audioContext.createOscillator();
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(frequency, now);
+            
+            // Subtle harmonic (triangle wave)
+            const harmonic = audioContext.createOscillator();
+            harmonic.type = 'triangle';
+            harmonic.frequency.setValueAtTime(frequency * 2, now);
+            
+            // Gain for main note
+            const gainNode = audioContext.createGain();
+            gainNode.gain.setValueAtTime(0, now);
+            gainNode.gain.linearRampToValueAtTime(0.15, now + 0.05); // Soft attack
+            gainNode.gain.linearRampToValueAtTime(0.10, now + duration - 0.1);
+            gainNode.gain.linearRampToValueAtTime(0, now + duration); // Fade out
+            
+            // Gain for harmonic (very subtle)
+            const harmonicGain = audioContext.createGain();
+            harmonicGain.gain.setValueAtTime(0, now);
+            harmonicGain.gain.linearRampToValueAtTime(0.03, now + 0.05);
+            harmonicGain.gain.linearRampToValueAtTime(0, now + duration);
+            
+            // Low-pass filter for warmth
+            const filter = audioContext.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(2000, now);
+            
+            // Connect nodes
+            oscillator.connect(gainNode);
+            harmonic.connect(harmonicGain);
+            gainNode.connect(filter);
+            harmonicGain.connect(filter);
+            filter.connect(audioContext.destination);
+            
+            // Play
+            oscillator.start(now);
+            harmonic.start(now);
+            oscillator.stop(now + duration);
+            harmonic.stop(now + duration);
+        }
+
+        function playMelody() {
+            if (!isPlaying) return;
+            
+            let currentTime = 0;
+            
+            melody.forEach((note, index) => {
+                currentNoteTimeout = setTimeout(() => {
+                    if (isPlaying) {
+                        playNote(noteFrequencies[note.note], note.duration);
+                    }
+                }, currentTime * 1000);
+                
+                currentTime += note.duration;
+            });
+            
+            // Loop the melody
+            musicLoop = setTimeout(() => {
+                if (isPlaying) playMelody();
+            }, currentTime * 1000 + 1000); // Add 1 second pause between loops
+        }
+
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function toggleMusic() {
+            const toggle = document.getElementById('musicToggle');
+            
+            if (!audioContext) {
+                initAudio();
+            }
+            
+            if (isPlaying) {
+                // Stop music
+                isPlaying = false;
+                toggle.classList.remove('playing');
+                toggle.querySelector('.music-icon').textContent = '🎵';
+                if (musicLoop) clearTimeout(musicLoop);
+            } else {
+                // Start music
+                isPlaying = true;
+                toggle.classList.add('playing');
+                toggle.querySelector('.music-icon').textContent = '🎶';
+                playMelody();
+            }
+        }
+
+        // === INITIALIZATION ===
+        document.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            animateTitle();
+            
+            // Start random sparkles after animations settle
+            setTimeout(randomSparkles, 10000);
+            
+            // Music toggle
+            document.getElementById('musicToggle').addEventListener('click', toggleMusic);
+            
+            // Auto-start music after all animations complete (9 seconds)
+            setTimeout(() => {
+                initAudio();
+                if (!isPlaying) {
+                    toggleMusic();
+                }
+            }, 9000);
+        });
+
+        // Prevent any accidental scrolling
+        document.body.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
+        document.body.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+    </script>
+</body>
+</html>
